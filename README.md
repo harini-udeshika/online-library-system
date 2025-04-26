@@ -1,4 +1,4 @@
-# 📚 Library Management System - REST API
+# 📚 Library Management System
 
 This project is a **Spring Boot REST API** for managing a library system, where users can:
 
