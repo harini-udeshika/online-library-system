@@ -27,5 +27,5 @@ public class BorrowRecord {
 
     @Column(name = "returned_at")
     private Instant returnedAt;
-    // getters/setters...
+
 }
