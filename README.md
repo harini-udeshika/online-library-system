@@ -52,26 +52,31 @@ CREATE DATABASE library_system;
 
 To ensure the system remains performant as data grows, the following database-level optimizations were performed:
 
-- **Indexing:**
+### Indexing:
   - Add indexes on columns that frequently filter or join on (e.g., `author`, `published_year`, `available_copies`, `user_id`, `borrowed_at`).
 
-- **Batch Operations:**
-  - Enable JDBC batching in Hibernate:
-    ```properties
-    spring.jpa.properties.hibernate.jdbc.batch_size=50
-    spring.jpa.properties.hibernate.order_inserts=true
-    spring.jpa.properties.hibernate.order_updates=true
-    ```
-
-- **Caching:**
-  - Leverage Hibernate’s second-level cache (e.g., Ehcache, Redis) for static or infrequently changing entities like `Book`.
-  - Use Spring’s `@Cacheable` on service methods to cache common queries.
+### Connection Pooling (HikariCP)
+- ✅ Adjust `maximum-pool-size` based on expected concurrent traffic and database server capacity.  
+  (e.g., Set to 20-50 for medium load applications; monitor and tune.)
+- ✅ Ensure `minimum-idle` connections are tuned according to expected idle periods to avoid unnecessary connection churn.
+- ✅ Reduce `idle-timeout` in environments with limited connection resources.
 
 
-2. **Configure `application.properties`:**
+---
 
-> - Replace with your actual MySQL username and password if different.
-> - Make sure you set `JWT_SECRET` environment variable before running the application.
+### 🚀 Hibernate Optimizations
+- ✅ `hibernate.jdbc.batch_size=50` is enabled — this reduces the number of round-trips to the database during bulk inserts/updates.
+- ✅ `hibernate.order_inserts=true` and `hibernate.order_updates=true` help maximize batching efficiency by grouping similar SQL operations together.
+- ✅ Using `MySQL8Dialect` ensures Hibernate generates optimized SQL for MySQL 8+.
+
+
+---
+
+### 🗃️ Prepared Statement Caching
+- ✅ `cachePrepStmts=true`, `prepStmtCacheSize=250`, and `prepStmtCacheSqlLimit=2048` are enabled — this minimizes parsing overhead on repeated queries.
+- ✅ These settings significantly reduce latency for frequently executed queries.
+
+
 
 ---
 
