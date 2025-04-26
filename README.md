@@ -50,13 +50,10 @@ CREATE DATABASE library_system;
 ```
 ## 🛠️ Database Optimizations
 
-To ensure your system remains performant as data grows, consider the following database-level optimizations:
+To ensure the system remains performant as data grows, the following database-level optimizations were performed:
 
 - **Indexing:**
-  - Add b-tree indexes on columns you frequently filter or join on (e.g., `author`, `published_year`, `available_copies`, `user_id`, `borrowed_at`).
-
-- **Partitioning:**
-  - For very large tables such as `borrow_records`, consider MySQL partitioning by range on date columns (like `borrowed_at`) to improve query performance and maintenance.
+  - Add indexes on columns that frequently filter or join on (e.g., `author`, `published_year`, `available_copies`, `user_id`, `borrowed_at`).
 
 - **Batch Operations:**
   - Enable JDBC batching in Hibernate:
@@ -70,12 +67,6 @@ To ensure your system remains performant as data grows, consider the following d
   - Leverage Hibernate’s second-level cache (e.g., Ehcache, Redis) for static or infrequently changing entities like `Book`.
   - Use Spring’s `@Cacheable` on service methods to cache common queries.
 
-- **Monitoring & Logging:**
-  - Enable MySQL slow-query logging:
-    ```sql
-    SET GLOBAL slow_query_log = 1;
-    SET GLOBAL long_query_time = 0.5;
-    ```
 
 2. **Configure `application.properties`:**
 
