@@ -2,6 +2,8 @@ package com.interview.librarymanagement.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 
@@ -22,10 +24,13 @@ public class BorrowRecord {
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
-    @Column(name = "borrowed_at", nullable = false)
-    private Instant borrowedAt = Instant.now();
+    @CreationTimestamp
+    @Column(name = "borrowed_at", updatable = false)
+    private Instant borrowedAt;
 
+    @UpdateTimestamp
     @Column(name = "returned_at")
     private Instant returnedAt;
+
 
 }

@@ -3,6 +3,7 @@ package com.interview.librarymanagement.model;
 import com.interview.librarymanagement.domain.Role;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +27,10 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
 
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
+
 
     private String password;
 
@@ -63,4 +67,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }
